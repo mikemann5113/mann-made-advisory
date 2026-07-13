@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mann Made Advisory — Operations Leadership</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0B1F3A;
+    --navy-deep: #061527;
+    --cream: #F6F3EC;
+    --gold: #C7A233;
+    --gold-bright: #E0BE4C;
+    --slate: #5B6472;
+    --ink: #14181F;
+    --line: rgba(11,31,58,0.12);
+    --serif: 'Fraunces', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{ color:inherit; }
+  img,svg{ display:block; max-width:100%; }
+
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--gold); outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,243,236,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .brand{
+    font-family:var(--serif); font-weight:600; font-size:19px;
+    letter-spacing:0.01em;
+  }
+  .brand span{ color:var(--gold); }
+  .navlinks{ display:flex; gap:36px; font-size:14px; font-weight:500; }
+  .navlinks a{ text-decoration:none; color:var(--navy); position:relative; }
+  .navlinks a::after{
+    content:''; position:absolute; left:0; right:0; bottom:-6px; height:1px;
+    background:var(--gold); transform:scaleX(0); transform-origin:left;
+    transition:transform 0.25s ease;
+  }
+  .navlinks a:hover::after{ transform:scaleX(1); }
+  @media (max-width:720px){ .navlinks{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;
+    padding:120px 0 0;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(199,162,51,0.14), transparent 60%),
+      var(--cream);
+    overflow:hidden;
+  }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:''; width:26px; height:1px; background:var(--gold); }
+  h1.headline{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(40px, 6.4vw, 76px);
+    line-height:1.02;
+    letter-spacing:-0.01em;
+    color:var(--navy);
+    max-width:880px;
+  }
+  h1.headline em{
+    font-style:italic; font-weight:500; color:var(--gold);
+  }
+  .sub{
+    margin-top:26px; font-size:19px; line-height:1.6; color:var(--slate);
+    max-width:560px; font-weight:400;
+  }
+  .hero-cta{
+    margin-top:40px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--sans); font-weight:600; font-size:14.5px;
+    padding:15px 26px; border-radius:2px; text-decoration:none;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary{
+    background:var(--navy); color:var(--cream);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(11,31,58,0.25); }
+  .btn-ghost{
+    color:var(--navy); border:1px solid var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--navy); }
+
+  /* ---------- TICKET RAIL (signature element) ---------- */
+  .ticket-outer{ margin-top:76px; }
+  .ticket{
+    background:var(--navy);
+    background-image:radial-gradient(circle at 4% 50%, rgba(255,255,255,0.06), transparent 40%);
+    color:var(--cream);
+    font-family:var(--mono);
+    position:relative;
+    padding:0;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .ticket-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 30px;
+    border-bottom:1px dashed rgba(246,243,236,0.25);
+    font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase;
+    color:rgba(246,243,236,0.65);
+  }
+  .ticket-head .dot{ color:var(--gold-bright); }
+  .ticket-items{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+  }
+  .ticket-item{
+    padding:26px 30px;
+    border-right:1px dashed rgba(246,243,236,0.18);
+  }
+  .ticket-item:last-child{ border-right:none; }
+  .ticket-num{
+    font-size:clamp(22px, 2.6vw, 30px); font-weight:600; color:var(--gold-bright);
+    letter-spacing:-0.01em;
+  }
+  .ticket-label{
+    margin-top:8px; font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    color:rgba(246,243,236,0.7); line-height:1.5;
+  }
+  @media (max-width:800px){
+    .ticket-items{ grid-template-columns:repeat(2,1fr); }
+    .ticket-item{ border-bottom:1px dashed rgba(246,243,236,0.18); }
+  }
+  @media (max-width:480px){
+    .ticket-items{ grid-template-columns:1fr; }
+  }
+
+  /* perforated bottom edge */
+  .perf{
+    height:14px;
+    background:
+      radial-gradient(circle 7px at 0 0, transparent 7px, var(--cream) 7.5px) top left/28px 14px repeat-x;
+  }
+
+  /* ---------- SECTION SCAFFOLDING ---------- */
+  section{ padding:120px 0; }
+  @media (max-width:640px){ section{ padding:80px 0; } }
+  .section-head{ margin-bottom:64px; max-width:640px; }
+  .section-eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; margin-bottom:16px;
+  }
+  h2.section-title{
+    font-family:var(--serif); font-weight:600; font-size:clamp(30px,3.6vw,42px);
+    color:var(--navy); line-height:1.1; letter-spacing:-0.01em;
+  }
+  .section-body{ margin-top:18px; color:var(--slate); font-size:17px; line-height:1.7; }
+
+  /* ---------- SERVICES ---------- */
+  .services{ background:var(--navy-deep); color:var(--cream); }
+  .services .section-eyebrow{ color:var(--gold-bright); }
+  .services h2.section-title{ color:var(--cream); }
+  .services .section-body{ color:rgba(246,243,236,0.65); }
+  .service-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+    background:rgba(246,243,236,0.14);
+    border:1px solid rgba(246,243,236,0.14);
+  }
+  @media (max-width:720px){ .service-grid{ grid-template-columns:1fr; } }
+  .service-card{
+    background:var(--navy-deep); padding:42px 40px;
+    transition:background 0.25s ease;
+  }
+  .service-card:hover{ background:#0d2542; }
+  .service-mark{
+    font-family:var(--mono); font-size:12px; color:var(--gold-bright); letter-spacing:0.1em;
+  }
+  .service-title{
+    font-family:var(--serif); font-size:23px; font-weight:600; margin-top:16px; margin-bottom:14px;
+  }
+  .service-desc{ font-size:15px; line-height:1.65; color:rgba(246,243,236,0.62); }
+
+  /* ---------- TIMELINE (real chronological sequence) ---------- */
+  .timeline{ }
+  .tl-row{
+    display:grid; grid-template-columns:140px 1fr; gap:32px;
+    padding:36px 0; border-top:1px solid var(--line);
+    position:relative;
+  }
+  .tl-row:last-child{ border-bottom:1px solid var(--line); }
+  .tl-years{
+    font-family:var(--mono); font-size:14px; color:var(--gold); font-weight:600; letter-spacing:0.02em;
+    padding-top:2px;
+  }
+  .tl-org{ font-family:var(--serif); font-size:24px; font-weight:600; color:var(--navy); }
+  .tl-role{ font-size:14.5px; color:var(--slate); font-weight:600; margin-top:4px; margin-bottom:12px; }
+  .tl-desc{ font-size:15.5px; line-height:1.7; color:var(--slate); max-width:640px; }
+  @media (max-width:640px){
+    .tl-row{ grid-template-columns:1fr; gap:8px; }
+  }
+
+  /* ---------- PHILOSOPHY / GOLD STANDARD CALLOUT ---------- */
+  .callout-wrap{ background:var(--cream); }
+  .callout{
+    border:1px solid var(--line);
+    border-left:4px solid var(--gold);
+    padding:52px 56px;
+    background:#FBF9F4;
+  }
+  @media (max-width:640px){ .callout{ padding:36px 26px; } }
+  .callout-eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; margin-bottom:18px;
+  }
+  .callout-quote{
+    font-family:var(--serif); font-weight:500; font-style:italic;
+    font-size:clamp(22px,2.6vw,30px); line-height:1.35; color:var(--navy);
+    max-width:760px;
+  }
+  .callout-attr{
+    margin-top:24px; font-size:14px; color:var(--slate); font-family:var(--mono);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{ background:var(--navy); color:var(--cream); position:relative; overflow:hidden; }
+  .contact::before{
+    content:''; position:absolute; top:-200px; right:-150px; width:500px; height:500px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(199,162,51,0.18), transparent 70%);
+  }
+  .contact .wrap{ position:relative; }
+  .contact h2{
+    font-family:var(--serif); font-weight:600; font-size:clamp(34px,5vw,56px);
+    line-height:1.08; max-width:720px; color:var(--cream);
+  }
+  .contact h2 em{ color:var(--gold-bright); font-style:italic; font-weight:500; }
+  .contact-sub{ margin-top:22px; font-size:17px; color:rgba(246,243,236,0.65); max-width:520px; line-height:1.65; }
+  .contact-grid{
+    margin-top:56px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:rgba(246,243,236,0.14); border:1px solid rgba(246,243,236,0.14);
+  }
+  @media (max-width:720px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact-cell{ background:var(--navy); padding:30px 32px; }
+  .contact-label{ font-family:var(--mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(246,243,236,0.5); }
+  .contact-value{ margin-top:10px; font-size:16px; font-weight:600; }
+  .contact-value a{ text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.2s; }
+  .contact-value a:hover{ border-color:var(--gold-bright); }
+
+  .hashtags{
+    margin-top:64px; padding-top:32px; border-top:1px dashed rgba(246,243,236,0.2);
+    font-family:var(--mono); font-size:13px; letter-spacing:0.06em; color:var(--gold-bright);
+    display:flex; gap:22px; flex-wrap:wrap;
+  }
+
+  footer{
+    background:var(--navy-deep); color:rgba(246,243,236,0.45);
+    padding:28px 0; font-size:13px;
+  }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">MANN MADE<span>.</span> ADVISORY</div>
+    <div class="navlinks">
+      <a href="#services">Services</a>
+      <a href="#record">Track Record</a>
+      <a href="#approach">Approach</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Operations Leadership &amp; Advisory</div>
+    <h1 class="headline">Thirty years on the floor.<br>Now built for <em>yours.</em></h1>
+    <p class="sub">Mike Mann helps hospitality, F&amp;B, and entertainment operators fix what's broken and scale what's working — the same Gold Standard playbook that took a golf company from 28 venues to 101.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Start a conversation</a>
+      <a href="#record" class="btn btn-ghost">See the track record</a>
+    </div>
+
+    <div class="ticket-outer reveal">
+      <div class="ticket">
+        <div class="ticket-head">
+          <span>ORDER &nbsp;#MANNMADE</span>
+          <span class="dot">● TRACK RECORD, VERIFIED</span>
+        </div>
+        <div class="ticket-items">
+          <div class="ticket-item">
+            <div class="ticket-num">101</div>
+            <div class="ticket-label">Venues scaled from 28, Topgolf</div>
+          </div>
+          <div class="ticket-item">
+            <div class="ticket-num">$1.7B</div>
+            <div class="ticket-label">Annual revenue under operations</div>
+          </div>
+          <div class="ticket-item">
+            <div class="ticket-num">75+</div>
+            <div class="ticket-label">Units run across five states, Chili's</div>
+          </div>
+          <div class="ticket-item">
+            <div class="ticket-num">30+</div>
+            <div class="ticket-label">Years in hospitality operations</div>
+          </div>
+        </div>
+      </div>
+      <div class="perf"></div>
+    </div>
+  </div>
+</header>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">What I do</div>
+      <h2 class="section-title">Advisory for operators who need it fixed, not studied.</h2>
+      <p class="section-body">Engagements are built around the problem, not a fixed retainer. Most work falls into one of four lanes.</p>
+    </div>
+    <div class="service-grid reveal">
+      <div class="service-card">
+        <div class="service-mark">01 / FRACTIONAL &amp; INTERIM</div>
+        <div class="service-title">Fractional COO Leadership</div>
+        <div class="service-desc">Hands-on operating leadership for multi-unit hospitality and entertainment businesses that need senior judgment now, not after a six-month search.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-mark">02 / TURNAROUND</div>
+        <div class="service-title">Gold Standard Operating Systems</div>
+        <div class="service-desc">The same operating framework built at Chili's and scaled at Topgolf: standardize the floor, fix the P&amp;L, rebuild the culture that holds it together.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-mark">03 / GOVERNANCE</div>
+        <div class="service-title">Board &amp; Advisory Services</div>
+        <div class="service-desc">Operating-partner perspective for boards and ownership groups evaluating growth, restructuring, or a leadership transition.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-mark">04 / GROWTH</div>
+        <div class="service-title">Franchise &amp; Multi-Unit Ops</div>
+        <div class="service-desc">Playbooks for franchisees and operators scaling unit count without losing consistency, guest experience, or margin.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="record">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Track record</div>
+      <h2 class="section-title">Three companies, one operating philosophy.</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-row">
+        <div class="tl-years">2017 — 2026</div>
+        <div>
+          <div class="tl-org">Topgolf</div>
+          <div class="tl-role">SVP, Global Operations</div>
+          <div class="tl-desc">Scaled operations from 28 to 101 venues and $1.7B in revenue, reaching $220M in EBITDA with the company's first cash-flow-positive year in 2022. Built the technology and operating stack around Toast, HotSchedules, Tableau, and Ziosk.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-years">1991 — 2017</div>
+        <div>
+          <div class="tl-org">Chili's / Brinker International</div>
+          <div class="tl-role">VP, Operations</div>
+          <div class="tl-desc">Ran 75+ units across five states and $280M in revenue. Created the "Gold Standard" turnaround model, later adopted brand-wide across the organization.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-years">1986 — 1991</div>
+        <div>
+          <div class="tl-org">Busch Entertainment / SeaWorld Florida</div>
+          <div class="tl-role">Early Career, Food &amp; Beverage</div>
+          <div class="tl-desc">Cut his teeth in theme park F&amp;B operations, the start of a career built on high-volume, guest-facing execution.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="callout-wrap">
+  <div class="wrap">
+    <div class="callout reveal">
+      <div class="callout-eyebrow">The Gold Standard</div>
+      <p class="callout-quote">"Operations is not a department. It's the sum of every decision made on the floor, multiplied by every shift, every day. Fix the standard and the results follow."</p>
+      <div class="callout-attr">— The operating philosophy behind every engagement</div>
+    </div>
+  </div>
+</section>
+
+<section id="approach">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Approach</div>
+      <h2 class="section-title">P&amp;L discipline. Floor-level execution. No slide decks required.</h2>
+      <p class="section-body">
+        Mike Mann built his career inside the operations, not above them: leading turnarounds unit by unit at Chili's, then scaling Topgolf's global footprint nearly fourfold while protecting culture and guest experience. He holds a degree in Business Administration with a Computer Science minor from the University of Central Florida, which shows up in how he integrates technology into operating systems rather than layering it on top. He also serves as a Board Director for the Delta Tau Delta Educational Foundation, work that keeps his governance instincts sharp outside of hospitality.
+      </p>
+      <p class="section-body">
+        Every engagement starts on the floor, with the people running shifts and the numbers that show whether the standard is holding. Strategy comes second.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>Ready to raise the <em>standard?</em></h2>
+      <p class="contact-sub">Whether it's a fractional leadership need, a board seat, or a turnaround that needs a hands-on operator, let's talk.</p>
+
+      <div class="contact-grid" style="grid-template-columns:repeat(2,1fr);">
+        <div class="contact-cell">
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="mailto:mike@mannmadeadvisory.com">mike@mannmadeadvisory.com</a></div>
+        </div>
+        <div class="contact-cell">
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value"><a href="https://linkedin.com/in/michaelrmann/" target="_blank" rel="noopener">/in/michaelrmann</a></div>
+        </div>
+      </div>
+
+      <div class="hashtags">
+        <span>#MannMade</span>
+        <span>#NeverCoast</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Mann Made Advisory</span>
+    <span>Frisco, Texas</span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
